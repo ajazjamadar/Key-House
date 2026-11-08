@@ -1,0 +1,4 @@
+"use strict";
+const test = require("node:test"); const assert = require("node:assert/strict"); const { validateCredential, apiId } = require("./app"); const catalog = require("./data/apis.json").entries; const validApiId = apiId(catalog[0]);
+test("validates a supported credential", () => { assert.deepEqual(validateCredential({ apiId: validApiId, label: "Production", type: "bearer", values: { token: "example-only" } }), { apiId: validApiId, label: "Production", type: "bearer", values: { token: "example-only" } }); });
+test("rejects unknown APIs and empty values", () => { assert.throws(() => validateCredential({ apiId: "missing", label: "Test", type: "apiKey", values: { key: "x" } }), /catalog/); assert.throws(() => validateCredential({ apiId: validApiId, label: "Test", type: "apiKey", values: { key: "" } }), /at least one/); });

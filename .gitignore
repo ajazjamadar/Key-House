@@ -1,0 +1,8 @@
+node_modules/
+coverage/
+.cache/
+.env
+.env.*
+!.env.example
+storage/credentials.enc
+.DS_Store

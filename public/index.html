@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Keyhouse is a local API credential desk for organizing keys and credentials across the Public APIs catalog.">
+  <title>Keyhouse | Your API keys, in one quiet place</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="icon" type="image/svg+xml" href="/assets/keyhouse-icon-dark.svg">
+</head>
+<body>
+  <header class="topbar site-header">
+    <a class="brand" href="/" aria-label="KeyHouse home"><img class="brand-logo" src="/assets/keyhouse-logo-dark.svg" alt="KeyHouse"></a>
+    <nav id="primary-nav" aria-label="Primary navigation">
+      <a href="/">Home</a>
+      <a href="/directory">API directory</a>
+      <a href="/vault">Vault</a>
+      <a href="/about">About / FAQ</a>
+    </nav>
+    <button class="mobile-nav-toggle" type="button" data-action="toggle-nav" aria-expanded="false" aria-controls="primary-nav">Menu</button>
+    <div class="header-actions">
+      <span class="local">● Local only</span>
+      <a class="button dark header-cta" href="/vault">Open vault</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section data-view="home" class="landing-hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">Personal credential desk</p>
+        <h1 id="hero-title">Your API keys, in one quiet place.</h1>
+        <p class="hero-lede">Browse the Public APIs catalog, then keep the credentials that power your projects organized in a local vault.</p>
+        <div class="hero-actions">
+          <a class="button dark" href="/vault">Explore the vault <span aria-hidden="true">→</span></a>
+          <a class="text-link" href="/directory">Browse API directory</a>
+        </div>
+        <p class="hero-note"><span aria-hidden="true">●</span> Local-first by design. Your catalog stays useful even before you add a key.</p>
+      </div>
+      <div class="hero-visual" aria-label="Keyhouse vault preview">
+        <div class="visual-glow" aria-hidden="true"></div>
+        <div class="vault-window">
+          <div class="window-bar"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span><span>keyhouse / vault</span><span class="window-lock">local</span></div>
+          <div class="window-content">
+            <div class="preview-kicker">Saved credentials <span>03 saved</span></div>
+            <div class="preview-row"><span class="preview-icon">S</span><span><b>Production</b><small>Stripe</small></span><code>••••••••••••</code></div>
+            <div class="preview-row"><span class="preview-icon blue">G</span><span><b>Workspace</b><small>GitHub</small></span><code>••••••••••••</code></div>
+            <div class="preview-row faded"><span class="preview-icon pale">W</span><span><b>Development</b><small>Weather API</small></span><code>••••••••••••</code></div>
+            <div class="preview-footer"><span>Encrypted at rest</span><span>Reveal when needed</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" data-view="home" class="landing-section feature-section" aria-labelledby="features-title">
+      <div class="section-intro"><p class="eyebrow">The useful part</p><h2 id="features-title">Less hunting. More building.</h2><p>Keyhouse gives your API credentials a clear home beside the catalog you use to find them.</p></div>
+      <div class="feature-grid">
+        <article class="feature-item"><span class="feature-number">01</span><h3>One local vault</h3><p>Keep saved credentials together in a persistent local store instead of scattering them across notes and project folders.</p></article>
+        <article class="feature-item"><span class="feature-number">02</span><h3>Catalog by category</h3><p>Move from a category to an API with its description, authentication type, link, and saved-key status in view.</p></article>
+        <article class="feature-item"><span class="feature-number">03</span><h3>Secrets on purpose</h3><p>Values stay masked in the dashboard. Reveal or copy one only when you intentionally ask for it.</p></article>
+      </div>
+    </section>
+
+    <section id="how-it-works" data-view="about home" class="landing-section steps-section" aria-labelledby="steps-title">
+      <div class="section-intro"><p class="eyebrow">A small routine</p><h2 id="steps-title">From catalog to credential.</h2></div>
+      <ol class="steps-list">
+        <li><span>01</span><div><h3>Find a service</h3><p>Search the directory or open a category page to understand what an API does and how it authenticates.</p></div></li>
+        <li><span>02</span><div><h3>Save what you own</h3><p>Add an API key, bearer token, username and password, OAuth client, or custom field with a label that makes sense to you.</p></div></li>
+        <li><span>03</span><div><h3>Use it when needed</h3><p>Return to the vault to edit, reveal, copy, or remove a saved credential. The default view stays masked.</p></div></li>
+      </ol>
+    </section>
+
+    <section id="dashboard" data-view="vault" class="product-section" aria-labelledby="dashboard-title">
+      <div class="product-heading"><div><p class="eyebrow">Your workspace</p><h2 id="dashboard-title">Saved credentials</h2><p>Everything you have chosen to keep, with search and category filters for the daily scan.</p></div><div class="product-actions"><button class="button dark" data-action="open-add">Add credential <span aria-hidden="true">+</span></button><span id="credential-count" class="count"></span></div></div>
+      <div class="toolbar"><input id="credential-search" type="search" placeholder="Search saved credentials" autocomplete="off"><select id="credential-category" aria-label="Filter credentials by category"><option value="">All categories</option></select></div>
+      <div id="credential-list" class="cards" aria-live="polite"></div>
+    </section>
+
+    <section id="directory" data-view="directory" class="product-section directory-product" aria-labelledby="directory-title">
+      <div class="product-heading"><div><p class="eyebrow">The catalog</p><h2 id="directory-title">API directory</h2><p>Explore 1,584 catalog entries across categories, with descriptions and authentication details.</p></div><div><button id="directory-back" class="link" data-action="directory-home" hidden>← All categories</button><span id="api-count" class="count"></span></div></div>
+      <div class="toolbar"><input id="api-search" type="search" placeholder="Search APIs by name or description" autocomplete="off"><select id="api-category" aria-label="Filter APIs by category"><option value="">All categories</option></select></div>
+      <div id="category-list" class="categories" aria-label="API categories"></div>
+      <div id="api-list" class="api-list" aria-live="polite"></div>
+    </section>
+
+    <section id="faq" data-view="about" class="landing-section faq-section" aria-labelledby="faq-title">
+      <div class="section-intro"><p class="eyebrow">Good to know</p><h2 id="faq-title">A few practical answers.</h2></div>
+      <div class="faq-list">
+        <details><summary>Does Keyhouse provide API keys?</summary><p>No. The catalog contains public API information only. You add and manage credentials you already own.</p></details>
+        <details><summary>Where are my credentials stored?</summary><p>Credentials are stored locally in an encrypted file. The encryption key is supplied through your environment configuration and is not included in the catalog or client bundle.</p></details>
+        <details><summary>Is this a hosted team vault?</summary><p>No. Keyhouse is designed for a single-user local deployment. Keep it on your local host and do not expose its port publicly.</p></details>
+        <details><summary>Can I see a secret without revealing it?</summary><p>Saved values are masked by default. The dashboard provides intentional Reveal and Copy actions for the credential you choose.</p></details>
+      </div>
+    </section>
+
+    <section data-view="home" class="final-cta" aria-labelledby="final-title"><p class="eyebrow">Ready when you are</p><h2 id="final-title">Put your next credential somewhere deliberate.</h2><p>Start with the catalog, or jump straight to the vault.</p><div class="hero-actions"><a class="button dark" href="/directory">Explore the directory <span aria-hidden="true">→</span></a><a class="text-link" href="/vault">Open saved credentials</a></div></section>
+    <section id="not-found" class="landing-section route-not-found" hidden aria-labelledby="not-found-title"><p class="eyebrow">Page not found</p><h2 id="not-found-title">That KeyHouse page does not exist.</h2><p>Use the directory or return to the home page to continue.</p><div class="hero-actions"><a class="button dark" href="/">Go home</a><a class="text-link" href="/directory">Open API directory</a></div></section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-brand"><a class="brand" href="/" aria-label="KeyHouse home"><img class="brand-logo" src="/assets/keyhouse-logo-dark.svg" alt="KeyHouse"></a><p>Local API credential management for the Public APIs catalog.</p></div>
+    <div class="developer-credit"><a class="developer-avatar" href="https://portfolioejazuddin.vercel.app/" target="_blank" rel="noreferrer" aria-label="View Md Ejazuddin Jamadar's portfolio">ME</a><div><p class="developer-label">Developed by</p><h2>Md Ejazuddin Jamadar</h2><p class="developer-role">Software &amp; Platform Engineer</p><div class="developer-links"><a href="mailto:mdejazuddinjamadar@gmail.com">Email</a><a href="https://github.com/ajazjamadar" target="_blank" rel="noreferrer">GitHub</a><a href="https://linkedin.com/in/md-ejazuddin-jamadar-359810258" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://portfolioejazuddin.vercel.app/" target="_blank" rel="noreferrer">Portfolio</a></div></div></div>
+    <p class="footer-note">© 2026 Md Ejazuddin Jamadar. All rights reserved.</p>
+  </footer>
+
+  <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+  <dialog id="credential-dialog" aria-labelledby="dialog-title"><form id="credential-form"><div class="heading"><h2 id="dialog-title">Add credential</h2><button type="button" class="close" data-action="close-dialog" aria-label="Close dialog">×</button></div><div id="form-error" class="error" role="alert" hidden></div><input id="credential-id" type="hidden"><label>API<select id="form-api" required></select></label><div class="row"><label>Label<input id="form-label" placeholder="Production" maxlength="80" required></label><label>Type<select id="form-type"><option value="apiKey">API key</option><option value="bearer">Bearer token</option><option value="password">Username / password</option><option value="oauth">OAuth client</option><option value="custom">Custom fields</option></select></label></div><div id="dynamic-fields"></div><div class="actions"><button type="button" class="button" data-action="close-dialog">Cancel</button><button class="button dark">Save securely</button></div></form></dialog>
+  <script src="/app.js"></script>
+</body>
+</html>
