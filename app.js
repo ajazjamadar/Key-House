@@ -70,7 +70,7 @@ function validateCredential(input, existing) {
   if (!Object.keys(values).length) throw new Error("Enter at least one credential value.");
   return { apiId: input.apiId, label, type: input.type, values, ...(existing || {}) };
 }
-function allowed(req) { if (!req.headers.origin) return true; try { const host = new URL(req.headers.origin).hostname; return host === HOST || host === "localhost"; } catch { return false; } }
+function allowed(req) { if (!req.headers.origin) return true; try { const originHost = new URL(req.headers.origin).hostname; const requestHost = new URL(`http://${req.headers.host || HOST}`).hostname; return originHost === requestHost || originHost === HOST || originHost === "localhost"; } catch { return false; } }
 function mutate(req) { return allowed(req) && req.headers["x-requested-with"] === "api-key-manager"; }
 function body(req) { return new Promise((resolve, reject) => { let text = ""; req.on("data", (part) => { text += part; if (Buffer.byteLength(text) > 65536) reject(new Error("Request is too large.")); }); req.on("end", () => { try { resolve(text ? JSON.parse(text) : {}); } catch { reject(new Error("Request body must be valid JSON.")); } }); req.on("error", reject); }); }
 function json(res, status, value) { res.writeHead(status, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" }); res.end(JSON.stringify(value)); }
@@ -106,4 +106,4 @@ async function handle(req, res) {
 }
 const server = http.createServer((req, res) => handle(req, res).catch((error) => json(res, 500, { error: error.message || "Unexpected server error" })));
 if (require.main === module) server.listen(PORT, HOST, () => console.log(`API key manager listening at http://${HOST}:${PORT}`));
-module.exports = { server, apiId, validateCredential };
+module.exports = { server, apiId, validateCredential, handle };

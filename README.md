@@ -32,3 +32,13 @@ Open `http://127.0.0.1:3000`. Keyhouse reads `.env` automatically. Credentials a
 - `npm run validate` validates the source README.
 - `npm test` runs the existing Node test suite.
 - `npm run test:app` runs the app module tests.
+
+## Vercel deployment
+
+The app includes `vercel.json` and a serverless adapter at `api/index.js`. Deploy from the repository root with the Vercel CLI or by importing the GitHub repository. Configure this Vercel environment variable before enabling credential writes:
+
+- `API_KEY_MANAGER_ENCRYPTION_KEY`: a 64-character hexadecimal key generated with `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`
+
+The browser routes `/`, `/directory`, `/directory/:category`, `/vault`, and `/about` are rewritten to the shared app shell, while `/api/*` is handled by the Node serverless function. Catalog browsing works without credentials.
+
+Important: Vercel serverless functions do not provide durable local disk storage. The existing encrypted `storage/credentials.enc` behavior is reliable for local deployment, but credentials written on Vercel can be lost when the function is recycled. Use an external encrypted database or secrets store before treating a hosted deployment as a durable vault. Do not commit `.env` or real credentials.
